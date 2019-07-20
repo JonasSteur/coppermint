@@ -1,0 +1,61 @@
+version: '3.4'
+
+networks:
+  shared_network:
+    external: true
+
+services:
+  db:
+    image: mariadb:10.3.2
+    # Full UTF-8 support
+    command: ["mysqld",
+      "--character-set-server=utf8mb4",
+      "--collation-server=utf8mb4_unicode_ci",
+      "--init-connect='SET NAMES utf8mb4;'",
+      "--character-set-client-handshake=FALSE"
+    ]
+    environment:
+      - MYSQL_ROOT_PASSWORD=coinage
+      - MYSQL_DATABASE=coppermint
+    ports:
+      - 33068:3306
+    networks:
+      - shared_network
+  coppermint:
+    build:
+      context: .
+      target: dev
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8010"]
+    environment:
+      - ALLOWED_HOSTS=*
+      - DEBUG=True
+      - DATABASE_URL=mysql://root:coinage@db:3306/coppermint?charset=utf8mb4
+      - DJANGO_SETTINGS_MODULE=coppermint.settings
+      - CACHE_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+    volumes:
+      - .:/app
+    ports:
+      - 8010:8010
+    links:
+      - db:db
+    depends_on:
+      - db
+      - redis
+    networks:
+      - shared_network
+  redis:
+    image: redis:3.2.11-alpine
+    ports:
+      - "6379:6379"
+  celery:
+    container_name: celery
+    build:
+      context: .
+      target: dev
+    command: ["celery", "-B", "-A", "coppermint", "--concurrency=5", "worker"]
+    environment:
+      - DJANGO_SETTINGS_MODULE=coppermint.settings
+      - CACHE_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - DATABASE_URL=mysql://root:coinage@db:3306/coppermint?charset=utf8mb4
