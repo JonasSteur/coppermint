@@ -50,8 +50,7 @@ ROOT_URLCONF = 'coppermint.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -125,7 +124,7 @@ LOGGING = {
     'root': {
         # Start logging at INFO level, specify stricter levels further in handlers and loggers
         'level': env('LOG_LEVEL', default='INFO'),
-        'handlers': [ 'console'],
+        'handlers': ['console'],
     },
     'formatters': {
         'verbose': {
@@ -202,3 +201,13 @@ CELERY_TIMEZONE = 'Europe/Brussels'
 # The definition of the periodic tasks initiated by celery-beat
 CELERY_BEAT_SCHEDULE = {
 }
+
+# Coinbase Pro
+# defaults are credentials for the public sandbox
+COINBASE_PRO_API_URL = env('COINBASE_PRO_API_URL', default='https://api.sandbox.coinbase.com')
+COINBASE_PRO_API_KEY = env('COINBASE_PRO_API_KEY', default='49084c576f5974b1725d2dda7f5f585d')
+COINBASE_PRO_API_PASSPHRASE = env('COINBASE_PRO_API_PASSPHRASE', default='this_is_a_testkey')
+COINBASE_PRO_API_SECRET = env(
+    'COINBASE_PRO_API_SECRET',
+    default='Gv+t29Ff9JI2eoV57wcbMZWIkETYZa7e0yfaARWsbU84+fb93G9FjD7wRIdI3IqP5NgOxWNe/NKd7PWTdMLbeQ=='
+)

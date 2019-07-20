@@ -23,6 +23,11 @@ RUN set -xe \
 FROM base as dev
 
 COPY . .
+COPY requirements/requirements_test.txt /tmp/requirements_test.txt
+RUN set -xe \
+    && pip install -U pip \
+    && pip install --no-deps --no-cache-dir -r /tmp/requirements_test.txt \
+    && pre-commit install
 RUN python manage.py collectstatic --noinput
 
 EXPOSE 8010

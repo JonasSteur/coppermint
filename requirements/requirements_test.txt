@@ -1,0 +1,13 @@
+# pre commit hooks
+pre-commit
+importlib-metadata
+importlib-resources
+zipp
+six
+identify
+aspy
+aspy.yaml
+pyyaml
+isodate
+cfgv
+toml
