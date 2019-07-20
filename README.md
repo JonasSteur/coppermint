@@ -1,0 +1,2 @@
+# coppermint
+Crypto trade automation
