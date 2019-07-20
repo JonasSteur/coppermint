@@ -1,5 +1,5 @@
 Django==2.2.2
-pytz==2019.1pytz==2019.1
+pytz==2019.1
 sqlparse==0.3.0
 django-environ==0.4.5
 
@@ -9,9 +9,8 @@ whitenoise==4.1.2
 
 mysqlclient==1.4.2
 
-# coinbase api client
-coinbase
-
+# coinbase pro api client
+cbpro
 # redis
 redis==3.2.1
 
