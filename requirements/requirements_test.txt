@@ -11,3 +11,7 @@ pyyaml
 isodate
 cfgv
 toml
+
+
+# code formatting
+black
