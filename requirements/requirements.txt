@@ -14,7 +14,8 @@ whitenoise==4.1.2
 psycopg2==2.8.3
 
 # coinbase pro api client
-cbpro
+#cbpro
+git+https://github.com/JonasSteur/coinbasepro-python.git@735aeb09d5314c686c27bef4568a7440df3347df#egg=cbpro
 sortedcontainers==1.5.9
 requests==2.22.0
 urllib3==1.25.3

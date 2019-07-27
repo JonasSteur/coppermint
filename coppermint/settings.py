@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # shell plus
     "django_extensions",
+    # Coppermint
+    "coppermint",
+    "coppermint.coinbase_pro",
 ]
 
 MIDDLEWARE = [
