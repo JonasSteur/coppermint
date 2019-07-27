@@ -1,5 +1,5 @@
 Django==2.2.2
-pytz==2019.1
+pytz==2019.1pytz==2019.1
 sqlparse==0.3.0
 django-environ==0.4.5
 
@@ -11,3 +11,14 @@ mysqlclient==1.4.2
 
 # coinbase api client
 coinbase
+
+# redis
+redis==3.2.1
+
+# celery
+celery==4.3.0
+kombu==4.6.3
+billiard==3.6.0
+amqp==2.5.0
+vine==1.3.0
+django-celery-results==1.0.4

@@ -117,3 +117,88 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = env('STATIC_ROOT', default=root('static'))
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'root': {
+        # Start logging at INFO level, specify stricter levels further in handlers and loggers
+        'level': env('LOG_LEVEL', default='INFO'),
+        'handlers': [ 'console'],
+    },
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(message)s'
+        },
+    },
+    'handlers': {
+        'null': {
+            # Eat all log messages with this handler
+            'level': 'DEBUG',
+            'class': 'logging.NullHandler',
+        },
+        'console': {
+            # Sent everything to the console
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        }
+    },
+    'loggers': {
+        # DisallowedHost errors happen early, we need to catch those separately
+        'django.security.DisallowedHost': {
+            'handlers': ['null'],
+            'propagate': False,
+        },
+        # ignore django request warnings for e.g. 404 and 429
+        'django.request': {
+            'level': 'WARNING',
+            'handlers': ['null'],
+            'propagate': False,
+        },
+        # If something happens while logging an error, we want to log it via another way, so Raven and Sentry errors go
+        # to the console.
+        'coppermint': {
+            'level': env('LOG_LEVEL_COPPERMINT', default='INFO'),
+            'handlers': ['console'],
+            'propagate': env.bool('LOGGERS_COPPERMINT_PROPAGATE', default=False),  # Testing override
+        },
+        'celery': {
+            'level': 'INFO',
+            'handlers': ['console'],
+            'propagate': True,
+        },
+    },
+}
+
+
+# Celery (task queue) settings
+# Do mind every celery setting must have the prefix CELERY_
+CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='redis://localhost:6379/0')
+CELERY_ALWAYS_EAGER = env.bool('CELERY_ALWAYS_EAGER', True)
+CELERY_BROKER_TRANSPORT_OPTIONS = env('CELERY_BROKER_TRANSPORT_OPTIONS',
+                                      default={'visibility_timeout': 1800},
+                                      cast={'value': str, 'cast': {'visibility_timeout': int}}, )
+CELERY_BROKER_CONNECTION_MAX_RETRIES = 5
+# https://docs.celeryproject.org/en/latest/userguide/configuration.html#broker-pool-limit
+# This setting has been added to test if it solves the 'ConnectionError' that happens occasionally
+# TODO https://vikingco.atlassian.net/browse/INT-5363
+CELERY_BROKER_POOL_LIMIT = None
+CELERY_WORKER_HIJACK_ROOT_LOGGER = False
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_ACKS_LATE = env('CELERY_TASK_ACKS_LATE', default=True)
+
+CELERY_DEFAULT_QUEUE = 'default'
+CELERY_DEFAULT_EXCHANGE = 'default'
+CELERY_DEFAULT_ROUTING_KEY = 'default'
+CELERY_SEND_TASK_ERROR_EMAILS = False
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TRACK_STARTED = True
+CELERY_ROUTES = {}
+CELERY_QUEUES = {}
+CELERY_TIMEZONE = 'Europe/Brussels'
+
+# The definition of the periodic tasks initiated by celery-beat
+CELERY_BEAT_SCHEDULE = {
+}
