@@ -6,6 +6,14 @@ from environ import Path, Env
 root = Path(__file__) - 2
 env = Env(DEBUG=(bool, False))
 
+# Read a file with environment variables, these variables can be used to set the value of django settings
+ENV_FILE = str(env.path("ENV_FILE", default=".env"))
+if path.isfile(ENV_FILE):
+    Env.read_env(ENV_FILE)
+else:
+    # unset if no file was found
+    ENV_FILE = None
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = path.dirname(path.dirname(path.abspath(__file__)))
 
