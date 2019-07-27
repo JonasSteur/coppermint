@@ -177,7 +177,7 @@ CELERY_BEAT_SCHEDULE = {}
 
 # Coinbase Pro
 # defaults are credentials for the public sandbox
-COINBASE_PRO_API_URL = env("COINBASE_PRO_API_URL", default="https://api.sandbox.coinbase.com")
+COINBASE_PRO_API_URL = env("COINBASE_PRO_API_URL", default=" https://api-public.sandbox.pro.coinbase.com")
 COINBASE_PRO_API_KEY = env("COINBASE_PRO_API_KEY", default="49084c576f5974b1725d2dda7f5f585d")
 COINBASE_PRO_API_PASSPHRASE = env("COINBASE_PRO_API_PASSPHRASE", default="this_is_a_testkey")
 COINBASE_PRO_API_SECRET = env(
