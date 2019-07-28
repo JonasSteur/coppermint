@@ -6,19 +6,14 @@ networks:
 
 services:
   db:
-    image: mariadb:10.3.2
-    # Full UTF-8 support
-    command: ["mysqld",
-      "--character-set-server=utf8mb4",
-      "--collation-server=utf8mb4_unicode_ci",
-      "--init-connect='SET NAMES utf8mb4;'",
-      "--character-set-client-handshake=FALSE"
-    ]
+    image: postgres:11.4
+    restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=coinage
-      - MYSQL_DATABASE=coppermint
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: coinage
+      POSTGRES_DB: coppermint
     ports:
-      - 33068:3306
+      - 5432:5432
     networks:
       - shared_network
   coppermint:
@@ -29,7 +24,7 @@ services:
     environment:
       - ALLOWED_HOSTS=*
       - DEBUG=True
-      - DATABASE_URL=mysql://root:coinage@db:3306/coppermint?charset=utf8mb4
+      - DATABASE_URL=postgresql://root:coinage@db:5432/coppermint
       - DJANGO_SETTINGS_MODULE=coppermint.settings
       - CACHE_URL=redis://redis:6379/0
       - CELERY_BROKER_URL=redis://redis:6379/0
@@ -58,4 +53,4 @@ services:
       - DJANGO_SETTINGS_MODULE=coppermint.settings
       - CACHE_URL=redis://redis:6379/0
       - CELERY_BROKER_URL=redis://redis:6379/0
-      - DATABASE_URL=mysql://root:coinage@db:3306/coppermint?charset=utf8mb4
+      - DATABASE_URL=postgresql://root:coinage@db:5432/coppermint

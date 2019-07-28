@@ -5,9 +5,11 @@ django-environ==0.4.5
 
 django-waffle==0.16.0
 
+# static files handling
 whitenoise==4.1.2
 
-mysqlclient==1.4.2
+# database
+psycopg2==2.8.3
 
 # coinbase pro api client
 cbpro
