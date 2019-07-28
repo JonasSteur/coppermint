@@ -91,6 +91,10 @@ class OrderStatus(Enum):
     SETTLED = "settled"
 
 
+ACTIVE_ORDER_STATUSES = [OrderStatus.PENDING.value, OrderStatus.OPEN.value, OrderStatus.ACTIVE.value]
+FILLED_ORDER_STATUSES = [OrderStatus.DONE.value, OrderStatus.SETTLED.value]
+
+
 class StopOrderType(Enum):
     # Loss: Triggers when the last trade price changes to a value at or below the stop_price.
     LOSS = "loss"

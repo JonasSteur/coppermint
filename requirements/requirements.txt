@@ -16,7 +16,7 @@ psycopg2==2.8.3
 # coinbase pro api client
 #cbpro
 git+https://github.com/JonasSteur/coinbasepro-python.git@735aeb09d5314c686c27bef4568a7440df3347df#egg=cbpro
-sortedcontainers==1.5.9
+sortedcontainers==2.1.0
 requests==2.22.0
 urllib3==1.25.3
 six==1.12.0

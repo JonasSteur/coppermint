@@ -1,0 +1,42 @@
+[run]
+branch = True
+omit =
+    # Ignore migrations
+    */migrations/*
+
+    # Ignore deployment files
+    requirements/*
+
+    # Ignore docs
+    docs/*
+
+    # Ignore manage files
+    manage*
+
+    # Ignore admin files
+    coppermint/*/admin.py
+
+    # Ignore settings files
+    */settings*
+
+    # Ignore url files
+    coppermint/**/urls*
+    coppermint/urls*
+
+    # Ignore wsgi file
+    coppermint/wsgi.py
+
+    # Ignore celery file
+    coppermint/celery.py
+
+    # Ignore factories files
+    *factories.py
+
+[report]
+exclude_lines=
+    pragma: no cover
+    def __repr__
+    def __iter__
+    def __str__
+    raise NotImplementedError
+fail_under = 100
