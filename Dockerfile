@@ -3,15 +3,22 @@ FROM python:3.7.4-slim-stretch as base
 WORKDIR /app
 
 RUN set -ex \
+    # ugly fix to get postgres to install properly
+    && mkdir -p /usr/share/man/man1 \
+    && mkdir -p /usr/share/man/man7 \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
         make \
-        libmariadbclient18 \
         git \
         gcc \
         python3-dev \
         openssh-client \
-        libmariadbclient-dev
+        libpq-dev \
+        postgresql-contrib \
+        postgresql \
+        postgresql-client
+
+
 
 COPY requirements/requirements.txt /tmp/requirements.txt
 
