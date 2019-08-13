@@ -1,6 +1,20 @@
 from enum import Enum
 
 
+class CoinbaseFeedChannel(Enum):
+    """
+    https://docs.pro.coinbase.com/#channels
+    """
+
+    HEARTBEAT = "heartbeat"
+    STATUS = "status"
+    TICKER = "ticker"
+    LEVEL2 = "level2"
+    USER = "user"
+    MATCHES = "matches"
+    FULL = "full"
+
+
 class CoinbaseProduct(Enum):
     ZRX_EUR = "ZRX-EUR"
     BAT_USDC = "BAT-USDC"
